@@ -1,6 +1,7 @@
 package employeemanagementsystem;
 
 import javax.swing.table.*;
+import java.io.*;
 
 
 /*
@@ -11,14 +12,14 @@ import javax.swing.table.*;
 
 
 public class MainJFrame extends javax.swing.JFrame {
-
-    public HashTable theHT;
     private DefaultTableModel model;
+    public HashTable theHT;
     
     public MainJFrame() {
         initComponents();
         initOtherComponents();
-        theHT = new HashTable(10);
+        initHashTable();
+        refreshDisplayTable();
   
     }
 
@@ -29,6 +30,28 @@ public class MainJFrame extends javax.swing.JFrame {
         empNotFoundLabel.setVisible(false);
         empEditPanel.setVisible(false);
         editResponseLabel.setVisible(false);
+    }
+    
+    private void initHashTable(){
+        try{
+            FileInputStream fis = new FileInputStream("database.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            theHT = (HashTable) ois.readObject();
+            if(theHT == null){
+                theHT = new HashTable(10);
+                System.out.println("Initializing new HashTable.");
+            } else {
+                System.out.println("HashTable successfully deserialized.");
+            }
+            ois.close();
+            fis.close();
+        } catch(EOFException e){
+            System.out.println(e);
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        
+        
     }
     
     /**
@@ -43,8 +66,6 @@ public class MainJFrame extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jColorChooser1 = new javax.swing.JColorChooser();
         title = new java.awt.Label();
-        saveToFileButton = new javax.swing.JButton();
-        loadFromFileButton = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         addPanel = new javax.swing.JPanel();
         fullTimeEmployeeAddButton = new javax.swing.JRadioButton();
@@ -114,23 +135,14 @@ public class MainJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         title.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         title.setText("Abhinav's Employee Management System");
-
-        saveToFileButton.setText("Save To File");
-        saveToFileButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveToFileButtonActionPerformed(evt);
-            }
-        });
-
-        loadFromFileButton.setText("Load From File");
-        loadFromFileButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadFromFileButtonActionPerformed(evt);
-            }
-        });
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
@@ -222,7 +234,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 addEmployeeButtonActionPerformed(evt);
             }
         });
-        addPanel.add(addEmployeeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, 160, -1));
+        addPanel.add(addEmployeeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 270, -1));
 
         resetAddButton.setText("Reset");
         resetAddButton.addActionListener(new java.awt.event.ActionListener() {
@@ -230,11 +242,11 @@ public class MainJFrame extends javax.swing.JFrame {
                 resetAddButtonActionPerformed(evt);
             }
         });
-        addPanel.add(resetAddButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 170, -1));
+        addPanel.add(resetAddButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 350, 280, -1));
 
         employeeAddedLabel.setForeground(new java.awt.Color(34, 134, 34));
         employeeAddedLabel.setText("Employee # Successfully Added!");
-        addPanel.add(employeeAddedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, -1, -1));
+        addPanel.add(employeeAddedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, -1, -1));
 
         generalInformationTitle.setText("General Information");
         addPanel.add(generalInformationTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(111, 81, -1, -1));
@@ -359,8 +371,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(empEditPanelLayout.createSequentialGroup()
                         .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fullTimeEmployeeEditButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(firstNameEditLabel)
-                            .addComponent(lastNameEditLabel))
+                            .addComponent(firstNameEditLabel))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(empEditPanelLayout.createSequentialGroup()
                         .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,20 +381,28 @@ public class MainJFrame extends javax.swing.JFrame {
                                         .addGap(65, 65, 65)
                                         .addComponent(generalInformationEditLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, empEditPanelLayout.createSequentialGroup()
+                                    .addGroup(empEditPanelLayout.createSequentialGroup()
                                         .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(deductionRateEditLabel)
-                                            .addComponent(employeeNumberEditLabel)
-                                            .addComponent(workLocationEditLabel))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(workLocationEditTextField)
-                                            .addComponent(firstNameEditTextField)
-                                            .addComponent(employeeNumberEditTextField)
-                                            .addComponent(lastNameEditTextField)
-                                            .addComponent(genderEditTextField)
-                                            .addComponent(deductionRateEditTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
-                                        .addGap(18, 18, 18)))
+                                            .addGroup(empEditPanelLayout.createSequentialGroup()
+                                                .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(deductionRateEditLabel)
+                                                    .addComponent(employeeNumberEditLabel)
+                                                    .addComponent(workLocationEditLabel))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(workLocationEditTextField)
+                                                    .addComponent(firstNameEditTextField)
+                                                    .addComponent(employeeNumberEditTextField)
+                                                    .addComponent(deductionRateEditTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)))
+                                            .addGroup(empEditPanelLayout.createSequentialGroup()
+                                                .addComponent(lastNameEditLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lastNameEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, empEditPanelLayout.createSequentialGroup()
+                                                .addComponent(genderEditLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(genderEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(empEditPanelLayout.createSequentialGroup()
@@ -408,12 +427,9 @@ public class MainJFrame extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(271, 271, 271))
                     .addGroup(empEditPanelLayout.createSequentialGroup()
-                        .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(genderEditLabel)
-                            .addGroup(empEditPanelLayout.createSequentialGroup()
-                                .addComponent(partTimeEmployeeEditButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(partTimeEmployeeEditButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         empEditPanelLayout.setVerticalGroup(
@@ -422,7 +438,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(empEditPanelLayout.createSequentialGroup()
                         .addGap(70, 70, 70)
-                        .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(empEditPanelLayout.createSequentialGroup()
                                 .addGap(20, 20, 20)
@@ -441,26 +457,22 @@ public class MainJFrame extends javax.swing.JFrame {
                                         .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(firstNameEditLabel)
                                             .addComponent(firstNameEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(empEditPanelLayout.createSequentialGroup()
-                                                .addGap(8, 8, 8)
-                                                .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                    .addComponent(lastNameEditLabel)
-                                                    .addComponent(lastNameEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(genderEditLabel))
-                                            .addGroup(empEditPanelLayout.createSequentialGroup()
-                                                .addGap(37, 37, 37)
-                                                .addComponent(genderEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(workLocationEditLabel)
-                                            .addGroup(empEditPanelLayout.createSequentialGroup()
-                                                .addComponent(workLocationEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                    .addComponent(deductionRateEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(deductionRateEditLabel)))))))))
+                                        .addGap(8, 8, 8)
+                                        .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(lastNameEditLabel)
+                                            .addComponent(lastNameEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(genderEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(genderEditLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(workLocationEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(workLocationEditLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(deductionRateEditTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(deductionRateEditLabel)))))
                     .addGroup(empEditPanelLayout.createSequentialGroup()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -478,7 +490,7 @@ public class MainJFrame extends javax.swing.JFrame {
                             .addComponent(generalInformationEditLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(wPYEditLabel)))
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(empEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveChangesButton)
                     .addComponent(deleteEmployeeButton))
@@ -511,7 +523,7 @@ public class MainJFrame extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(searchEmpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addGap(224, 224, 224)
+                        .addGap(225, 225, 225)
                         .addComponent(editResponseLabel)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -526,11 +538,11 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(clearSearchEmpButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(empNotFoundLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(empEditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(empEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(editResponseLabel)
-                .addContainerGap())
+                .addGap(6, 6, 6))
         );
 
         jTabbedPane1.addTab("Search", searchPanel);
@@ -572,7 +584,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(refreshTableButton)
                 .addGap(18, 18, 18)
-                .addComponent(displayTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                .addComponent(displayTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
                 .addGap(22, 22, 22))
         );
 
@@ -583,44 +595,26 @@ public class MainJFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(loadFromFileButton)
-                        .addGap(85, 85, 85)
-                        .addComponent(saveToFileButton)
-                        .addGap(235, 235, 235))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(130, 130, 130))))
+                .addGap(46, 46, 46)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(63, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(156, 156, 156))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loadFromFileButton)
-                    .addComponent(saveToFileButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void saveToFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveToFileButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveToFileButtonActionPerformed
-
-    private void loadFromFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadFromFileButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loadFromFileButtonActionPerformed
 
     private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
 
@@ -709,7 +703,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_resetAddButtonActionPerformed
 
     private void refreshTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTableButtonActionPerformed
-        initDisplayTable();        // TODO add your handling code here:
+        refreshDisplayTable();        // TODO add your handling code here:
     }//GEN-LAST:event_refreshTableButtonActionPerformed
 
     private void searchEmpTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchEmpTextFieldActionPerformed
@@ -807,7 +801,7 @@ public class MainJFrame extends javax.swing.JFrame {
         
         // TODO add your handling code here:
     }//GEN-LAST:event_clearSearchEmpButtonActionPerformed
-
+    
     private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonActionPerformed
         try{
             int newEmpNumber = Integer.parseInt(employeeNumberEditTextField.getText());
@@ -850,18 +844,32 @@ public class MainJFrame extends javax.swing.JFrame {
         //creates variables for new employee
     }//GEN-LAST:event_saveChangesButtonActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try{
+            FileOutputStream fos = new FileOutputStream("database.txt");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(theHT);
+            oos.close();
+            fos.close();
+            System.out.println("Changes saved to database.");
+        } catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     
-    private void initDisplayTable() {                                         
+    private void refreshDisplayTable() {                                         
         // TODO add your handling code here:
         displayTable.setVisible(true);
         displayTableScrollPane.setVisible(true);
         int numInHT = theHT.getNumInHashTable();
         
-        model = new DefaultTableModel(new Object[] {"Status",
-                                                    "Emp Num",
+        model = new DefaultTableModel(new Object[] {"Emp Num",
+                                                    "Status",
                                                     "First Name",
                                                     "Last Name",
-                                                    "Work Location"},
+                                                    "Work Location",
+                                                    "Deduction Rate"},
                                                     numInHT);
         displayTable.setModel(model);
         displayTable.setAutoCreateColumnsFromModel(true);
@@ -889,11 +897,12 @@ public class MainJFrame extends javax.swing.JFrame {
                         System.out.println("    That employee has gross yearly salary $" + Double.toString(theFTE.getYearlySalary()));
                         System.out.println("    That employee has net yearly income $" + Double.toString(theFTE.calcAnnualNetIncome()));
                         
-                        model.setValueAt("Full Time", empCounter, 0);
-                        model.setValueAt(theEmp.getEmpNum(), empCounter, 1);
+                        model.setValueAt("Full Time", empCounter, 1);
+                        model.setValueAt(theEmp.getEmpNum(), empCounter, 0);
                         model.setValueAt(theEmp.getFirstName(), empCounter, 2);
                         model.setValueAt(theEmp.getLastName(), empCounter, 3);
                         model.setValueAt(theEmp.getWorkLocation(), empCounter, 4);
+                        model.setValueAt(theEmp.getDeductRate(), empCounter, 5);
                     }
                     
                     if (theEmp instanceof PTE) {
@@ -902,11 +911,12 @@ public class MainJFrame extends javax.swing.JFrame {
                         System.out.println("    That employee has hours per week " + Double.toString(thePTE.hoursPerWeek));
                         System.out.println("    That employee has weeks per year " + Double.toString(thePTE.weeksPerYear));
                         
-                        model.setValueAt("Part Time", empCounter, 0);
-                        model.setValueAt(theEmp.getEmpNum(), empCounter, 1);
+                        model.setValueAt("Part Time", empCounter, 1);
+                        model.setValueAt(theEmp.getEmpNum(), empCounter, 0);
                         model.setValueAt(theEmp.getFirstName(), empCounter, 2);
                         model.setValueAt(theEmp.getLastName(), empCounter, 3);
                         model.setValueAt(theEmp.getWorkLocation(), empCounter, 4);
+                        model.setValueAt(theEmp.getDeductRate(), empCounter, 5);
 
                    }
                 }
@@ -1003,7 +1013,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField lastNameAddTextField;
     private javax.swing.JLabel lastNameEditLabel;
     private javax.swing.JTextField lastNameEditTextField;
-    private javax.swing.JButton loadFromFileButton;
     private javax.swing.JPanel overviewPanel;
     private javax.swing.JRadioButton partTimeEmployeeAddButton;
     private javax.swing.JRadioButton partTimeEmployeeEditButton;
@@ -1011,7 +1020,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton resetAddButton;
     private javax.swing.JLabel salaryInfoEditLabel;
     private javax.swing.JButton saveChangesButton;
-    private javax.swing.JButton saveToFileButton;
     private javax.swing.JButton searchEmpButton;
     private javax.swing.JLabel searchEmpNumberLabel;
     private javax.swing.JTextField searchEmpTextField;

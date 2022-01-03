@@ -2,9 +2,9 @@ package employeemanagementsystem;
 
 
 import java.util.ArrayList;
+import java.io.*;
 
-
-public class HashTable {
+public class HashTable implements Serializable{
 	
 	// ATTRIBUTES
 

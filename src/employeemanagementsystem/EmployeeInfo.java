@@ -1,7 +1,7 @@
 package employeemanagementsystem;
+import java.io.*;
 
-
-public class EmployeeInfo {
+public class EmployeeInfo implements Serializable{
 
     
     // ATTRIBUTES

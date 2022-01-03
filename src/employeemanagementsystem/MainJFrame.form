@@ -17,6 +17,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -32,24 +35,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace pref="47" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="loadFromFileButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                      <Component id="saveToFileButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="235" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jTabbedPane1" min="-2" pref="670" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="title" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" min="-2" pref="670" max="-2" attributes="0"/>
+              <EmptySpace pref="63" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="title" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="156" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -58,13 +52,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Component id="title" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="loadFromFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="saveToFileButton" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" min="-2" pref="464" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" min="-2" pref="481" max="-2" attributes="0"/>
               <EmptySpace pref="26" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -78,22 +67,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Abhinav&apos;s Employee Management System"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="saveToFileButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Save To File"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveToFileButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="loadFromFileButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Load From File"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadFromFileButtonActionPerformed"/>
-      </Events>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
       <Properties>
@@ -360,7 +333,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="170" y="330" width="160" height="-1"/>
+                  <AbsoluteConstraints x="20" y="350" width="270" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -373,7 +346,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="340" y="330" width="170" height="-1"/>
+                  <AbsoluteConstraints x="310" y="350" width="280" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -386,7 +359,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="260" y="370" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="260" y="390" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -421,7 +394,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="empEditPanel" min="-2" pref="551" max="-2" attributes="0"/>
@@ -437,7 +410,7 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="224" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="225" max="-2" attributes="0"/>
                               <Component id="editResponseLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -457,11 +430,11 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="empNotFoundLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="16" max="32767" attributes="0"/>
-                      <Component id="empEditPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="empEditPanel" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="editResponseLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -514,7 +487,6 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="fullTimeEmployeeEditButton" min="-2" pref="93" max="-2" attributes="0"/>
                                       <Component id="firstNameEditLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lastNameEditLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
@@ -527,22 +499,34 @@
                                                   <Component id="generalInformationEditLabel" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
                                               </Group>
-                                              <Group type="102" alignment="1" attributes="0">
+                                              <Group type="102" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="deductionRateEditLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="employeeNumberEditLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="workLocationEditLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Group type="102" attributes="0">
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <Component id="deductionRateEditLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                              <Component id="employeeNumberEditLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                              <Component id="workLocationEditLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          </Group>
+                                                          <EmptySpace max="32767" attributes="0"/>
+                                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                              <Component id="workLocationEditTextField" max="32767" attributes="0"/>
+                                                              <Component id="firstNameEditTextField" alignment="0" max="32767" attributes="0"/>
+                                                              <Component id="employeeNumberEditTextField" max="32767" attributes="0"/>
+                                                              <Component id="deductionRateEditTextField" alignment="1" pref="102" max="32767" attributes="0"/>
+                                                          </Group>
+                                                      </Group>
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <Component id="lastNameEditLabel" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace max="32767" attributes="0"/>
+                                                          <Component id="lastNameEditTextField" min="-2" pref="102" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="102" alignment="1" attributes="0">
+                                                          <Component id="genderEditLabel" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace max="32767" attributes="0"/>
+                                                          <Component id="genderEditTextField" min="-2" pref="102" max="-2" attributes="0"/>
+                                                      </Group>
                                                   </Group>
-                                                  <EmptySpace max="32767" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="workLocationEditTextField" max="32767" attributes="0"/>
-                                                      <Component id="firstNameEditTextField" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="employeeNumberEditTextField" max="32767" attributes="0"/>
-                                                      <Component id="lastNameEditTextField" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="genderEditTextField" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="deductionRateEditTextField" alignment="1" pref="102" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Component id="jSeparator3" min="-2" pref="12" max="-2" attributes="0"/>
@@ -578,14 +562,9 @@
                                   <EmptySpace min="-2" pref="271" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="genderEditLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <Component id="partTimeEmployeeEditButton" min="-2" pref="93" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jSeparator1" min="-2" pref="527" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <Component id="partTimeEmployeeEditButton" min="-2" pref="93" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jSeparator1" min="-2" pref="527" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -598,7 +577,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="jSeparator3" min="-2" pref="187" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -620,34 +599,27 @@
                                                       <Component id="firstNameEditLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                                       <Component id="firstNameEditTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                                          <Group type="103" groupAlignment="3" attributes="0">
-                                                              <Component id="lastNameEditLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                              <Component id="lastNameEditTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                          <Component id="genderEditLabel" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                                          <Component id="genderEditTextField" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="workLocationEditLabel" min="-2" max="-2" attributes="0"/>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="workLocationEditTextField" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                          <Group type="103" groupAlignment="3" attributes="0">
-                                                              <Component id="deductionRateEditTextField" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                                                              <Component id="deductionRateEditLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
+                                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="3" attributes="0">
+                                                      <Component id="lastNameEditLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="lastNameEditTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
+                                          </Group>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="genderEditTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="genderEditLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="workLocationEditTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="workLocationEditLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="deductionRateEditTextField" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                              <Component id="deductionRateEditLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -673,7 +645,7 @@
                                   <Component id="wPYEditLabel" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                          <EmptySpace pref="59" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="saveChangesButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="deleteEmployeeButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -869,7 +841,7 @@
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="refreshTableButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="displayTableScrollPane" pref="368" max="32767" attributes="0"/>
+                      <Component id="displayTableScrollPane" pref="385" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
               </Group>

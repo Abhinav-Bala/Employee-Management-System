@@ -1,21 +1,10 @@
 
 package employeemanagementsystem;
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author P0068839
- */
-
+import java.io.*;
 // FULL TIME EMPLOYEE
 
-public class FTE extends EmployeeInfo {
+public class FTE extends EmployeeInfo implements Serializable {
     
     /**
      *

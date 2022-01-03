@@ -1,9 +1,11 @@
 package employeemanagementsystem;
 
+import java.io.*;
+
 
    // PART TIME EMPLOYEE
 
-public class PTE extends EmployeeInfo {
+public class PTE extends EmployeeInfo implements Serializable{
     
     
     public double hourlyWage;
